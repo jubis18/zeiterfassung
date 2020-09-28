@@ -2,18 +2,29 @@
 
 class Base {
 
-    public static function all($table_name, $table_row) {
+    public static function allProjects() {
 
         $db = Connector::getInstance();
         $connection= $db->getConnection(); 
-        $sql = "SELECT * FROM ".$table_name ; //projekte
+        $sql = "SELECT * FROM projects" ;
         $result = mysqli_query($connection, $sql);
         
+        return $result;
+      
+    }
+
+    public static function projInfo($id) {
+        
+        $db = Connector::getInstance();
+        $connection= $db->getConnection(); 
+        $sql = "SELECT * FROM projects_time WHERE project_id=$id";
+        $result = mysqli_query($connection, $sql);
+
         while($row = $result->fetch_assoc() ) {
-            
-            print_r( "</br> " .  $row["$table_row"] ); //projekt_name    
+            print_r( "Time: ".$_POST['time'] );
+            print_r( "Date: ".$_POST['date'] );
+            print_r( "Task: ".$_POST['project_task'] );
         }
-        $connection->close();
 
     }
 
@@ -22,34 +33,35 @@ class Base {
         $db = Connector::getInstance();
         $connection = $db->getConnection();
         $pname = $_POST['project_name'];
-        $sql = "INSERT INTO projects (project_name) VALUES ('$pname') "; //projekte , projekt_name
+        $sql = "INSERT INTO projects (project_name) VALUES ('$pname') "; 
         $result = mysqli_query($connection, $sql);
 
         $lastId = mysqli_insert_id($connection);
         $time_foreign_id = "INSERT INTO projects_time (project_id) VALUES ('$lastId')";
-        $result = mysqli_query($connection, $pFork);
-        
-        if(isset($_POST['project_name'])) {
-            
-            //header("Location: /zeiterfassung/index.php");
-        }
-        else {
-            echo "<h2> Error on DB </h2>";
-        }
+        $result = mysqli_query($connection, $time_foreign_id);
 
-        $connection->close();
     }
 
-    public static function create_time() {
+    public static function delete_project($id) {
         
         $db = Connector::getInstance();
         $connection = $db->getConnection();
-        
+        $sql = "DELETE FROM projects WHERE project_id= $id";
+        $result = mysqli_query($connection, $sql);
+
+        $sql = "DELETE FROM projects_time WHERE project_id=$id";
+        $result = mysqli_query($connection, $sql);
+
+        header("Location: /zeiterfassung/index.php");
+
     }
 
-    function delete_project($project_id) {
-       
+    public static function update($table_name) {
+        //$db = Connector::getInstance();
+       // $connection = $db->getConnection();
     }
+
+ 
 
 }
 

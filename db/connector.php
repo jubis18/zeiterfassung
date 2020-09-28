@@ -6,7 +6,7 @@ class Connector {
 	private static $_instance; //The single instance
 	private $_host = "localhost";
 	private $_username = "root";
-	private $_password = "";
+	private $_password = "root";
 	private $_database = "projects_db";
 
 	/*
