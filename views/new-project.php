@@ -1,8 +1,8 @@
 <?php
- include $_SERVER['DOCUMENT_ROOT']."/zeiterfassung/db/connector.php";
- include $_SERVER['DOCUMENT_ROOT']."/zeiterfassung/models/base.php";
+include $_SERVER['DOCUMENT_ROOT']."/zeiterfassung/db/connector.php";
+include $_SERVER['DOCUMENT_ROOT']."/zeiterfassung/models/base.php";
 
- echo "<a href='/zeiterfassung/index.php'> zurück</a>";
+echo "<a href='/zeiterfassung/index.php'> zurück</a>";
 echo '<form action="?action=gesendet" method="post">
       <input type="text" name="project_name">
       <input type="submit" value="Projekt erstellen">
