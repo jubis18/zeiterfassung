@@ -42,10 +42,6 @@ class Base {
         $sql = "INSERT INTO projects (project_name) VALUES ('$pname') "; 
         $result = mysqli_query($connection, $sql);
 
-        $lastId = mysqli_insert_id($connection);
-        $time_foreign_id = "INSERT INTO projects_time (project_id) VALUES ('$lastId')";
-        $result = mysqli_query($connection, $time_foreign_id);
-
     }
 
     public static function delete_project($id) {
@@ -65,21 +61,8 @@ class Base {
     public static function add_task($id,$time, $date, $task) {
         $db = Connector::getInstance();
         $connection = $db->getConnection();
-        $sql = "SELECT * FROM projects_time WHERE project_id=$id ";
+        $sql = "INSERT INTO projects_time (project_id, time,date,project_task) VALUES ($id, '$time', '$date', '$task') ";
         $result = mysqli_query($connection, $sql);
-        
-        while($row = $result->fetch_assoc() ) {
-            if($row['time']) {
-                $sql = "INSERT INTO projects_time (project_id, time,date,project_task) VALUES ($id, '$time', '$date', '$task') ";
-                $result = mysqli_query($connection, $sql);
-            break;
-            }else {
-                $sql = "UPDATE projects_time SET time = '$time', date = '$date', project_task ='$task' WHERE project_id = $id" ;
-                $result = mysqli_query($connection, $sql);
-            break;
-            }
-        }
-       
 
         header("Location: /zeiterfassung/index.php");
 
@@ -89,7 +72,7 @@ class Base {
         
         $db = Connector::getInstance();
         $connection = $db->getConnection();
-        $sql = "UPDATE projects_time SET time = NULL, date = NULL, project_task = NULL WHERE projects_time_id = $id";
+        $sql = "DELETE FROM projects_time WHERE projects_time_id=$id";
         $result = mysqli_query($connection, $sql);
 
         header("Location: /zeiterfassung/index.php");

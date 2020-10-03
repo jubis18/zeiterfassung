@@ -16,7 +16,7 @@ echo "<a href='/zeiterfassung/views/new-project.php'> Create Project</a>";
         
         print_r("<form action='?action=update_$id' method='post'>
                 <input type='hidden' name='id' value='$id'>
-                <input type='time' name='time'>
+                <input type='time' name='time' value = 00:00>
                 <input type='date' name='date'>  
                 <input type='text' name='task'>
 
