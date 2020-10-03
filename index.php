@@ -29,6 +29,7 @@ echo "<a href='/zeiterfassung/views/new-project.php'> Create Project</a>";
     }
 
 
+
     if(isset($_POST['time'], $_POST['date'], $_POST['task']) ) {
         
         $id =   $_POST['id'];

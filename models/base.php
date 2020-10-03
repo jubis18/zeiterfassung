@@ -22,15 +22,23 @@ class Base {
 
         while($row = $result->fetch_assoc() ) {
             
-            if($row['time'] != NULL) {
+            if($row['projects_time_id'] != NULL) {
                 $projects_time_id = $row['projects_time_id'];
                 print_r( "Time: ".$row['time'] ."</br>" );
                 print_r( "Date: ".$row['date']."</br>" );
                 print_r( "Task: ".$row['project_task']."</br>" );
+                
+
             
                 print_r("<div> <a href='?del_task=$projects_time_id'>Delete task </a> </div>");
             }
         }
+            $seconds = Base::sum_time($id);
+            $hours = floor($seconds / 3600);
+            $mins = floor($seconds / 60 % 60);
+            $secs = floor($seconds % 60);
+            $timeFormat = sprintf('%02d:%02d:%02d', $hours, $mins, $secs);
+            echo  "Total time: ". $timeFormat;
 
     }
 
@@ -79,6 +87,17 @@ class Base {
 
     }
 
+    public static function sum_time($id) {
+        $db = Connector::getInstance();
+        $connection = $db->getConnection();
+        $sql = "SELECT project_id, SUM(TIME_TO_SEC(time)) AS totalTime FROM projects_time WHERE project_id=$id";
+        $result = mysqli_query($connection, $sql);
+        
+        while($row = $result->fetch_assoc() ) {
+
+            return $row['totalTime'];
+    } 
+        } 
  
 
 }
