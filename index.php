@@ -21,7 +21,8 @@ echo "<a href='/zeiterfassung/views/new-project.php'> Create Project</a>";
                 <input type='text' name='task'>
 
                 <input type='submit' value='project update'>
-                </form>");
+                </form> ");
+                
  
         print_r("<div> <a href='?del=$id'>Delete</a> </div>");
 
@@ -35,8 +36,6 @@ echo "<a href='/zeiterfassung/views/new-project.php'> Create Project</a>";
         $date = $_POST['date'];
         $task = $_POST['task'];
 
-        print_r( "</br>" . $id . " ". $time ." ". $date. " ". $task);
-
         Base::add_task($id,$time, $date, $task);
     }
     
@@ -44,6 +43,10 @@ echo "<a href='/zeiterfassung/views/new-project.php'> Create Project</a>";
     
     if(isset($_GET['del'])) {
         Base::delete_project($_GET['del']);
+    }
+
+    if(isset($_GET['del_task'])) {
+        Base::delete_task($_GET['del_task']);
     }
 
 

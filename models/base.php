@@ -21,9 +21,15 @@ class Base {
         $result = mysqli_query($connection, $sql);
 
         while($row = $result->fetch_assoc() ) {
-            print_r( "Time: ".$row['time'] ."</br>" );
-            print_r( "Date: ".$row['date']."</br>" );
-            print_r( "Task: ".$row['project_task']."</br>" );
+            
+            if($row['time'] != NULL) {
+                $projects_time_id = $row['projects_time_id'];
+                print_r( "Time: ".$row['time'] ."</br>" );
+                print_r( "Date: ".$row['date']."</br>" );
+                print_r( "Task: ".$row['project_task']."</br>" );
+            
+                print_r("<div> <a href='?del_task=$projects_time_id'>Delete task </a> </div>");
+            }
         }
 
     }
@@ -74,6 +80,17 @@ class Base {
             }
         }
        
+
+        header("Location: /zeiterfassung/index.php");
+
+    }
+
+    public static function delete_task($id) {
+        
+        $db = Connector::getInstance();
+        $connection = $db->getConnection();
+        $sql = "UPDATE projects_time SET time = NULL, date = NULL, project_task = NULL WHERE projects_time_id = $id";
+        $result = mysqli_query($connection, $sql);
 
         header("Location: /zeiterfassung/index.php");
 
