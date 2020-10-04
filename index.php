@@ -7,7 +7,25 @@ echo "<a href='/zeiterfassung/views/new-project.php'> Create Project</a>";
 echo "<a href='/zeiterfassung/views/projects.php'> Info Projects</a>";
 
 
-        Base::projInfo();
+        $result = Base::projInfo();
+
+        while($row = $result->fetch_assoc() ) {
+            
+            if($row['projects_time_id'] != NULL) {
+                
+                $projects_time_id = $row['projects_time_id'];
+                $project_id = $row['project_id'];
+                print_r( "</br> Time: ".$row['time'] ."</br>" );
+                print_r( "Date: ".$row['date']."</br>" );
+                print_r( "Task: ".$row['project_task']."</br>" );
+                
+                $pname =Base::projectById($project_id);
+                $pname = $pname['project_name'];
+                print_r("Project: <b> $pname </b>");
+                
+                print_r("<div> <a href='?del_task=$projects_time_id'>Delete task </a> </div>");
+            }
+        }
        
         print_r("<form action='?action=update' method='post'>
                 <input type='date' name='date'>");
@@ -17,14 +35,6 @@ echo "<a href='/zeiterfassung/views/projects.php'> Info Projects</a>";
                         <input type='text' name='task'>
                         <input type='submit' value='project update'>
                         </form> ");
-                
- 
-        //print_r("<div> <a href='?del=$id'>Delete</a> </div>");
-        
-
-
-    //}     
-
 
 
     if(isset($_POST['time'], $_POST['date'], $_POST['task'], $_POST['projects']) ) {

@@ -12,15 +12,9 @@ echo '<form action="?action=gesendet" method="post">
       <input type="submit" value="Projekt erstellen">
       </form>';
 
-/*echo '<form action="" method="POST">
-<input type="submit" value="0" name="mybutton">
-<input type="submit" value="1" name="mybutton">
-<input type="submit" value="2" name="mybutton">
-</form>'; */
-
 
       if(isset($_POST['project_name'])) {
-            Base::create_project();
+            Base::create_project($_POST['project_name']);
             
       }
 

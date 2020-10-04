@@ -31,31 +31,14 @@ class Base {
         $sql = "SELECT * FROM projects_time ORDER BY date DESC";
         $result = mysqli_query($connection, $sql);
 
-        while($row = $result->fetch_assoc() ) {
-            
-            if($row['projects_time_id'] != NULL) {
-                
-                $projects_time_id = $row['projects_time_id'];
-                $project_id = $row['project_id'];
-                print_r( "</br> Time: ".$row['time'] ."</br>" );
-                print_r( "Date: ".$row['date']."</br>" );
-                print_r( "Task: ".$row['project_task']."</br>" );
-                
-                $pname =Base::projectById($project_id);
-                $pname = $pname['project_name'];
-                print_r("Project: <b> $pname </b>");
-                
-                print_r("<div> <a href='?del_task=$projects_time_id'>Delete task </a> </div>");
-            }
-        }
+        return $result;
 
     }
 
-    public static function create_project() {
+    public static function create_project($pname) {
        
         $db = Connector::getInstance();
         $connection = $db->getConnection();
-        $pname = $_POST['project_name'];
         $sql = "INSERT INTO projects (project_name) VALUES ('$pname') "; 
         $result = mysqli_query($connection, $sql);
 
@@ -107,6 +90,10 @@ class Base {
             return $row['totalTime'];
     } 
         }
+
+    public static function total_day_time_sum() {
+        //ToDo
+    }
         
     public static function select_projects() {
         
