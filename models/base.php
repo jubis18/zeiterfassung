@@ -13,32 +13,41 @@ class Base {
       
     }
 
-    public static function projInfo($id) {
+    public static function projectById($id) {
+        $db = Connector::getInstance();
+        $connection= $db->getConnection(); 
+        $sql = "SELECT project_name FROM projects WHERE project_id = $id";
+        $result = mysqli_query($connection, $sql);
+
+        $row = $result->fetch_assoc();
+        return $row;
+         
+    }
+
+    public static function projInfo() {
         
         $db = Connector::getInstance();
         $connection= $db->getConnection(); 
-        $sql = "SELECT * FROM projects_time WHERE project_id=$id";
+        $sql = "SELECT * FROM projects_time ORDER BY date DESC";
         $result = mysqli_query($connection, $sql);
 
         while($row = $result->fetch_assoc() ) {
             
             if($row['projects_time_id'] != NULL) {
+                
                 $projects_time_id = $row['projects_time_id'];
-                print_r( "Time: ".$row['time'] ."</br>" );
+                $project_id = $row['project_id'];
+                print_r( "</br> Time: ".$row['time'] ."</br>" );
                 print_r( "Date: ".$row['date']."</br>" );
                 print_r( "Task: ".$row['project_task']."</br>" );
                 
-
-            
+                $pname =Base::projectById($project_id);
+                $pname = $pname['project_name'];
+                print_r("Project: <b> $pname </b>");
+                
                 print_r("<div> <a href='?del_task=$projects_time_id'>Delete task </a> </div>");
             }
         }
-            $seconds = Base::sum_time($id);
-            $hours = floor($seconds / 3600);
-            $mins = floor($seconds / 60 % 60);
-            $secs = floor($seconds % 60);
-            $timeFormat = sprintf('%02d:%02d:%02d', $hours, $mins, $secs);
-            echo  "Total time: ". $timeFormat;
 
     }
 
@@ -62,7 +71,7 @@ class Base {
         $sql = "DELETE FROM projects_time WHERE project_id=$id";
         $result = mysqli_query($connection, $sql);
 
-        header("Location: /zeiterfassung/index.php");
+        header("Location: /zeiterfassung/views/projects.php");
 
     }
 
@@ -97,7 +106,25 @@ class Base {
 
             return $row['totalTime'];
     } 
-        } 
+        }
+        
+    public static function select_projects() {
+        
+        $db = Connector::getInstance();
+        $connection = $db->getConnection();
+        $sql = "SELECT * FROM projects" ;
+        $result = mysqli_query($connection, $sql);
+        $select= '<select name="projects">';
+        
+        while($row = $result->fetch_assoc())  {
+
+            $select.='<option value="'.$row['project_id'].'">'.$row['project_name'].'</option>';
+
+        }
+        $select.='</select>';
+        echo $select;
+    }
+    
  
 
 }
