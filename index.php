@@ -24,6 +24,8 @@ echo "<a href='/zeiterfassung/views/projects.php'> Info Projects</a>";
                 print_r("Project: <b> $pname </b>");
                 
                 print_r("<div> <a href='?del_task=$projects_time_id'>Delete task </a> </div>");
+                print_r("<div> <a href='views/update.php?update_task=$projects_time_id'>Update </a> </div>");
+
             }
         }
        
