@@ -9,6 +9,10 @@ echo "<a href='/zeiterfassung/views/projects.php'> Info Projects</a>";
 
         $result = Base::projInfo();
 
+        if(isset($_GET['del_task'])) {
+            Base::delete_task($_GET['del_task']);
+        }
+
         while($row = $result->fetch_assoc() ) {
             
             if($row['projects_time_id'] != NULL) {
@@ -50,9 +54,7 @@ echo "<a href='/zeiterfassung/views/projects.php'> Info Projects</a>";
     }
 
 
-    if(isset($_GET['del_task'])) {
-        Base::delete_task($_GET['del_task']);
-    }
+   
 
 
 

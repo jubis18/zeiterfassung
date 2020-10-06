@@ -23,6 +23,17 @@ class Base {
         return $row;
          
     }
+    
+    public static function projectInfoById($id) {
+        $db = Connector::getInstance();
+        $connection= $db->getConnection(); 
+        $sql = "SELECT * FROM projects_time WHERE projects_time_id = $id";
+        $result = mysqli_query($connection, $sql);
+
+        //$row = $result->fetch_assoc();
+        return $result;
+         
+    }
 
     public static function projInfo() {
         
@@ -66,6 +77,13 @@ class Base {
 
         header("Location: /zeiterfassung/index.php");
 
+    }
+
+    public function update_task($id, $time, $date, $task) {
+        $db = Connector::getInstance();
+        $connection = $db->getConnection();
+        $sql = "UPDATE projects_time SET time = '$time' , date = '$date' , project_task = '$task' WHERE projects_time_id = $id";
+        $result = mysqli_query($connection, $sql);
     }
 
     public static function delete_task($id) {
