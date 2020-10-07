@@ -110,7 +110,19 @@ class Base {
         }
 
     public static function total_day_time_sum() {
-        //ToDo
+        $db = Connector::getInstance();
+        $connection = $db->getConnection();
+        $sql = "SELECT date, SUM(TIME_TO_SEC(time)) AS 'totaltime' FROM projects_time GROUP BY date";
+        $result = mysqli_query($connection, $sql); 
+        while($row = $result->fetch_assoc() ) {
+            $seconds = $row['totaltime'];
+            $hours = floor($seconds / 3600);
+            $mins = floor($seconds / 60 % 60);
+            $secs = floor($seconds % 60);
+            $timeFormat = sprintf('%02d:%02d:%02d', $hours, $mins, $secs);
+            echo  "</br> Total time ". $timeFormat ." ";
+            echo "</br>" . $row['date'] . "  ";
+        } 
     }
         
     public static function select_projects() {

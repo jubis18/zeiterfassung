@@ -36,6 +36,8 @@ echo "<a href='/zeiterfassung/views/projects.php'> Info Projects</a>";
     }
 
     if(isset($_POST['submit'])) {
-        echo "UPDATED";
+        
+        $id =$_POST['taskid'];
+        header("Location: /zeiterfassung/index.php");
     }
 ?>

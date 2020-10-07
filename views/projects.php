@@ -27,6 +27,7 @@ while($row = $allProjects->fetch_assoc() ) {
     print_r("</br> <div> <a href='?del=$id'>Delete $pname</a> </div>");
 
 }
+Base::total_day_time_sum();
 
 if(isset($_GET['del'])) {
     Base::delete_project($_GET['del']);
