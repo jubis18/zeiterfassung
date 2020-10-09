@@ -112,7 +112,7 @@ class Base {
     public static function total_day_time_sum() {
         $db = Connector::getInstance();
         $connection = $db->getConnection();
-        $sql = "SELECT date, SUM(TIME_TO_SEC(time)) AS 'totaltime' FROM projects_time GROUP BY date";
+        $sql = "SELECT date, SUM(TIME_TO_SEC(time)) AS 'totaltime' FROM projects_time GROUP BY date ORDER BY date DESC";
         $result = mysqli_query($connection, $sql); 
         while($row = $result->fetch_assoc() ) {
             $seconds = $row['totaltime'];
