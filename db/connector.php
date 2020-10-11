@@ -1,11 +1,11 @@
 <?php
 
-class Connector {
+final class Connector {
 
     private $_connection;
 	private static $_instance; //The single instance
 	private $_host = "localhost";
-	private $_username = "root";
+	private $_username = "";
 	private $_password = "";
 	private $_database = "projects_db";
 
@@ -22,11 +22,12 @@ class Connector {
 
 	// Constructor
 	private function __construct() {
-		$this->_connection = new mysqli($this->_host, $this->_username, $this->_password, $this->_database);
+		$this->_connection = new SQLite3($_SERVER['DOCUMENT_ROOT'].'/db/projectsDB.db');
+
 	
-		// Error handling
+		 //Error handling
 		if(mysqli_connect_error()) {
-			trigger_error("Failed to conencto to MySQL: " . mysql_connect_error(), E_USER_ERROR);
+			trigger_error("Failed to conencto to MySQL: " . mysqli_connect_error(), E_USER_ERROR);
 		}
 	}
 

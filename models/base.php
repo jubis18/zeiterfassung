@@ -7,19 +7,20 @@ class Base {
         $db = Connector::getInstance();
         $connection= $db->getConnection(); 
         $sql = "SELECT * FROM projects" ;
-        $result = mysqli_query($connection, $sql);
+        $result = $connection->query($sql); 
         
         return $result;
       
     }
 
-    public static function projectById($id) {
+    public static function projectById($id) {  
+
         $db = Connector::getInstance();
         $connection= $db->getConnection(); 
         $sql = "SELECT project_name FROM projects WHERE project_id = $id";
-        $result = mysqli_query($connection, $sql);
+        $result = $connection->query( $sql);
 
-        $row = $result->fetch_assoc();
+        $row = $result->fetchArray();
         return $row;
          
     }
@@ -28,9 +29,8 @@ class Base {
         $db = Connector::getInstance();
         $connection= $db->getConnection(); 
         $sql = "SELECT * FROM projects_time WHERE projects_time_id = $id";
-        $result = mysqli_query($connection, $sql);
+        $result = $connection->query($sql);
 
-        //$row = $result->fetch_assoc();
         return $result;
          
     }
@@ -40,7 +40,7 @@ class Base {
         $db = Connector::getInstance();
         $connection= $db->getConnection(); 
         $sql = "SELECT * FROM projects_time ORDER BY date DESC";
-        $result = mysqli_query($connection, $sql);
+        $result = $connection->query($sql);
 
         return $result;
 
@@ -50,8 +50,8 @@ class Base {
        
         $db = Connector::getInstance();
         $connection = $db->getConnection();
-        $sql = "INSERT INTO projects (project_name) VALUES ('$pname') "; 
-        $result = mysqli_query($connection, $sql);
+        $sql = "INSERT INTO projects (project_name) VALUES ('$pname'); "; 
+        $result =$connection->query($sql);
 
     }
 
@@ -60,12 +60,12 @@ class Base {
         $db = Connector::getInstance();
         $connection = $db->getConnection();
         $sql = "DELETE FROM projects WHERE project_id= $id";
-        $result = mysqli_query($connection, $sql);
+        $result = $connection->query($sql);
 
         $sql = "DELETE FROM projects_time WHERE project_id=$id";
-        $result = mysqli_query($connection, $sql);
+        $result = $connection->query($sql);
 
-        header("Location: /zeiterfassung/views/projects.php");
+        header("Location: /views/projects.php");
 
     }
 
@@ -73,9 +73,9 @@ class Base {
         $db = Connector::getInstance();
         $connection = $db->getConnection();
         $sql = "INSERT INTO projects_time (project_id, time,date,project_task) VALUES ($id, '$time', '$date', '$task') ";
-        $result = mysqli_query($connection, $sql);
+        $result = $connection->query($sql);
 
-        header("Location: /zeiterfassung/index.php");
+        header("Location: /index.php");
 
     }
 
@@ -83,7 +83,7 @@ class Base {
         $db = Connector::getInstance();
         $connection = $db->getConnection();
         $sql = "UPDATE projects_time SET time = '$time' , date = '$date' , project_task = '$task' WHERE projects_time_id = $id";
-        $result = mysqli_query($connection, $sql);
+        $result = $connection->query($sql);
     }
 
     public static function delete_task($id) {
@@ -91,19 +91,20 @@ class Base {
         $db = Connector::getInstance();
         $connection = $db->getConnection();
         $sql = "DELETE FROM projects_time WHERE projects_time_id=$id";
-        $result = mysqli_query($connection, $sql);
+        $result = $connection->query($sql);
 
-        header("Location: /zeiterfassung/index.php");
+        header("Location: /index.php");
 
     }
 
     public static function sum_time($id) {
         $db = Connector::getInstance();
         $connection = $db->getConnection();
-        $sql = "SELECT project_id, SUM(TIME_TO_SEC(time)) AS totalTime FROM projects_time WHERE project_id=$id";
-        $result = mysqli_query($connection, $sql);
+        $sql = "SELECT project_id, SUM(strftime('%s', time) -
+        strftime('%s', '00:00:00'       )) AS totalTime FROM projects_time WHERE project_id=$id";
+        $result = $connection->query($sql);
         
-        while($row = $result->fetch_assoc() ) {
+        while($row = $result->fetchArray() ) {
 
             return $row['totalTime'];
     } 
@@ -112,9 +113,11 @@ class Base {
     public static function total_day_time_sum() {
         $db = Connector::getInstance();
         $connection = $db->getConnection();
-        $sql = "SELECT date, SUM(TIME_TO_SEC(time)) AS 'totaltime' FROM projects_time GROUP BY date ORDER BY date DESC";
-        $result = mysqli_query($connection, $sql); 
-        while($row = $result->fetch_assoc() ) {
+        $sql = "SELECT date, SUM(strftime('%s', time) -
+        strftime('%s', '00:00:00'       )) AS 'totaltime' FROM projects_time GROUP BY date ORDER BY date DESC";
+        $result = $connection->query($sql); 
+        
+        while($row = $result->fetchArray() ) {
             $seconds = $row['totaltime'];
             $hours = floor($seconds / 3600);
             $mins = floor($seconds / 60 % 60);
@@ -130,10 +133,10 @@ class Base {
         $db = Connector::getInstance();
         $connection = $db->getConnection();
         $sql = "SELECT * FROM projects" ;
-        $result = mysqli_query($connection, $sql);
+        $result = $connection->query($sql);
         $select= '<select name="projects">';
         
-        while($row = $result->fetch_assoc())  {
+        while($row = $result->fetchArray())  {
 
             $select.='<option value="'.$row['project_id'].'">'.$row['project_name'].'</option>';
 

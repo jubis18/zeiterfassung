@@ -1,10 +1,10 @@
 <?php
-include $_SERVER['DOCUMENT_ROOT']."/zeiterfassung/db/connector.php";
-include $_SERVER['DOCUMENT_ROOT']."/zeiterfassung/models/base.php";
+include $_SERVER['DOCUMENT_ROOT']."/db/connector.php";
+include $_SERVER['DOCUMENT_ROOT']."/models/base.php";
 
-echo "<a href='/zeiterfassung/index.php'> Tasks</a>";
-echo "<a href='/zeiterfassung/views/new-project.php'> Create Project</a>";
-echo "<a href='/zeiterfassung/views/projects.php'> Info Projects</a>";
+echo "<a href='/index.php'> Tasks</a>";
+echo "<a href='/views/new-project.php'> Create Project</a>";
+echo "<a href='/views/projects.php'> Info Projects</a>";
 
 
 echo '<form action="?action=gesendet" method="post">
@@ -14,7 +14,9 @@ echo '<form action="?action=gesendet" method="post">
 
 
       if(isset($_POST['project_name'])) {
-            Base::create_project($_POST['project_name']);
+            if(Base::create_project($_POST['project_name']) ) {
+                  echo "success";
+            };
             
       }
 

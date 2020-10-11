@@ -1,10 +1,10 @@
 <?php
-include $_SERVER['DOCUMENT_ROOT']."/zeiterfassung/db/connector.php";
-include $_SERVER['DOCUMENT_ROOT']."/zeiterfassung/models/base.php";
+include $_SERVER['DOCUMENT_ROOT']."/db/connector.php";
+include $_SERVER['DOCUMENT_ROOT']."/models/base.php";
 
-echo "<a href='/zeiterfassung/index.php'> Tasks</a>";
-echo "<a href='/zeiterfassung/views/new-project.php'> Create Project</a>";
-echo "<a href='/zeiterfassung/views/projects.php'> Info Projects</a>";
+echo "<a href='/index.php'> Tasks</a>";
+echo "<a href='/views/new-project.php'> Create Project</a>";
+echo "<a href='/views/projects.php'> Info Projects</a>";
 
     echo " </br> Update project task: ". $_GET['update_task'];
     $task_id = $_GET['update_task'];
@@ -12,7 +12,7 @@ echo "<a href='/zeiterfassung/views/projects.php'> Info Projects</a>";
 
     
 
-    while($row = $result->fetch_assoc() ) {
+    while($row = $result->fetchArray() ) {
         $task = $row['project_task'];
         $time = $row['time'];
         $date = $row['date'];
@@ -38,6 +38,6 @@ echo "<a href='/zeiterfassung/views/projects.php'> Info Projects</a>";
     if(isset($_POST['submit'])) {
         
         $id =$_POST['taskid'];
-        header("Location: /zeiterfassung/index.php");
+        header("Location: /index.php");
     }
 ?>
