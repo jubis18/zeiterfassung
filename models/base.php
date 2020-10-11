@@ -121,8 +121,7 @@ class Base {
             $seconds = $row['totaltime'];
             $hours = floor($seconds / 3600);
             $mins = floor($seconds / 60 % 60);
-            $secs = floor($seconds % 60);
-            $timeFormat = sprintf('%02d:%02d:%02d', $hours, $mins, $secs);
+            $timeFormat = sprintf('%02d:%02d', $hours, $mins);
             echo  "</br> Total time ". $timeFormat ." ";
             echo "</br>" . $row['date'] . "  ";
         } 

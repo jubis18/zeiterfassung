@@ -15,8 +15,8 @@ while($row = $result->fetchArray() ) {
          $seconds = Base::sum_time($id);
           $hours = floor($seconds / 3600);
           $mins = floor($seconds / 60 % 60);
-          $secs = floor($seconds % 60);
-          $timeFormat = sprintf('%02d:%02d:%02d', $hours, $mins, $secs);
+          
+          $timeFormat = sprintf('%02d:%02d', $hours, $mins,);
           echo  "</br> Total time <b>$pname </b>: ". $timeFormat ."</br>";
        
 }
