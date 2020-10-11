@@ -1,15 +1,12 @@
 <?php
+include $_SERVER['DOCUMENT_ROOT'].'/layout/header.php';
+
 include $_SERVER['DOCUMENT_ROOT']."/db/connector.php";
 include $_SERVER['DOCUMENT_ROOT']."/models/base.php";
-
-echo "<a href='/index.php'> Tasks</a>";
-echo "<a href='/views/new-project.php'> Create Project</a>";
-echo "<a href='/views/projects.php'> Info Projects</a>";
 
     echo " </br> Update project task: ". $_GET['update_task'];
     $task_id = $_GET['update_task'];
     $result =Base::projectInfoById($task_id);
-
     
 
     while($row = $result->fetchArray() ) {
@@ -40,4 +37,8 @@ echo "<a href='/views/projects.php'> Info Projects</a>";
         $id =$_POST['taskid'];
         header("Location: /index.php");
     }
+
+
+
+    include $_SERVER['DOCUMENT_ROOT'].'/layout/footer.php';
 ?>

@@ -1,13 +1,11 @@
 <?php
+include "layout/header.php";
+
 include("db/connector.php");
 include("models/base.php");
  
-echo "<a href='/index.php'> Tasks</a>";
-echo "<a href='/views/new-project.php'> Create Project</a>";
-echo "<a href='/views/projects.php'> Info Projects</a>";
-
-
-        $result = Base::projInfo();
+       
+$result = Base::projInfo();
 
         if(isset($_GET['del_task'])) {
             Base::delete_task($_GET['del_task']);
@@ -54,14 +52,7 @@ echo "<a href='/views/projects.php'> Info Projects</a>";
         Base::add_task($id,$time, $date, $task);
     }
 
-    //Base::projectById(2);
 
-
-   
-
-
-
-    
-
+include "layout/footer.php";
 
 ?>

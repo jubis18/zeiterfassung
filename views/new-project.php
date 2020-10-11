@@ -1,11 +1,8 @@
 <?php
+include $_SERVER['DOCUMENT_ROOT']."/layout/header.php";
+
 include $_SERVER['DOCUMENT_ROOT']."/db/connector.php";
 include $_SERVER['DOCUMENT_ROOT']."/models/base.php";
-
-echo "<a href='/index.php'> Tasks</a>";
-echo "<a href='/views/new-project.php'> Create Project</a>";
-echo "<a href='/views/projects.php'> Info Projects</a>";
-
 
 echo '<form action="?action=gesendet" method="post">
       <input type="text" name="project_name">
@@ -22,6 +19,6 @@ echo '<form action="?action=gesendet" method="post">
 
 
 
-
+      include $_SERVER['DOCUMENT_ROOT']."/layout/footer.php";
 
 ?>
