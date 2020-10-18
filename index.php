@@ -15,11 +15,11 @@ $result = Base::projInfo();
             //echo $row['projects_time_id'];
             
             if($row['projects_time_id'] != NULL) {
-                
+
                 $projects_time_id = $row['projects_time_id'];
                 $project_id = $row['project_id'];
-                print_r( "</br> Time: ".$row['time'] ."</br>" );
-                print_r( "Date: ".$row['date']."</br>" );
+                print_r( "Date: <u>".date("d-m-Y", strtotime($row['date']))."</u></br>" );
+                print_r( "Time: ".$row['time'] ."</br>" );
                 print_r( "Task: ".$row['project_task']."</br>" );
                 
                 $pname =Base::projectById($project_id);
@@ -37,17 +37,19 @@ $result = Base::projInfo();
                     <path fill-rule="evenodd" d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175l-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
                     </svg> </a> </div>
             </div>
+            <hr>
 <?php
             }
         }
+        $current_date = date("Y-m-d");
        
-        print_r("<form action='?action=update' method='post'>
-                <input type='date' name='date'>");
+        print_r("<form action='' method='post'>
+                <input class='inp_form' type='date' name='date' value ='$current_date'>");
                 Base::select_projects();
 
-                print_r("<input type='time' name='time' value = 00:00>
-                        <input type='text' name='task'>
-                        <input type='submit' value='project update'>
+                print_r("<input class='inp_form' type='time' name='time' value = 00:00>
+                        <input class='inp_form' type='text' name='task'>
+                        <input class='inp_form' type='submit' value='project update'>
                         </form> ");
 
 
@@ -59,6 +61,7 @@ $result = Base::projInfo();
         $task = $_POST['task'];
 
         Base::add_task($id,$time, $date, $task);
+        
     }
 
 

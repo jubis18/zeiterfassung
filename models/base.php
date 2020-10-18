@@ -75,7 +75,7 @@ class Base {
         $sql = "INSERT INTO projects_time (project_id, time,date,project_task) VALUES ($id, '$time', '$date', '$task') ";
         $result = $connection->query($sql);
 
-        header("Location: /index.php");
+        echo "<meta http-equiv='refresh' content='0'>";
 
     }
 
@@ -122,8 +122,9 @@ class Base {
             $hours = floor($seconds / 3600);
             $mins = floor($seconds / 60 % 60);
             $timeFormat = sprintf('%02d:%02d', $hours, $mins);
-            echo  "</br> Total time ". $timeFormat ." ";
-            echo "</br>" . $row['date'] . "  ";
+            print_r( "<p style= 'margin-top: 1rem;'> <u>".date("d-m-Y", strtotime($row['date'])) . "</u> - Total time : ". $timeFormat ."</p>");
+            echo "<hr>";
+            
         } 
     }
         
