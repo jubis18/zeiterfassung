@@ -19,12 +19,10 @@ while($row = $result->fetchArray() ) {
        
 }
 
- $allProjects = Base::allProjects();
-
  while($row = $result->fetchArray() ) {
      $id = $row['project_id'];
      $pname = $row['project_name'];
-     //print_r("</br> <div> <a href='?del=$id'>Delete $pname</a> </div>");
+     
      ?> <div style= "margin:10px 0px 10px 0px">
                 <div class = "icon_delete"> <a href='?del=<?php echo $id?>'><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                 <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
